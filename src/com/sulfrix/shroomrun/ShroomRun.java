@@ -1,0 +1,87 @@
+package com.sulfrix.shroomrun;
+
+import com.sulfrix.shroomrun.entities.Camera;
+import com.sulfrix.shroomrun.entities.Tile;
+import com.sulfrix.shroomrun.lib.AssetCache;
+import com.sulfrix.shroomrun.lib.Display;
+import com.sulfrix.shroomrun.lib.Input;
+import com.sulfrix.shroomrun.lib.TimeManager;
+import com.sulfrix.shroomrun.scenarios.MainScenario;
+import com.sulfrix.shroomrun.scenarios.TestScenario;
+import processing.core.*;
+import processing.event.KeyEvent;
+import processing.opengl.PGraphicsOpenGL;
+
+public class ShroomRun extends PApplet {
+
+    // this is shit, remember to remove
+    public static boolean debugOBB = false;
+
+    // slightly less shit
+    public static boolean debugText = true;
+
+    public Scenario currentScenario;
+    public Input input = new Input();
+
+    public Camera testCam;
+
+    public void settings() {
+        size(1920, 1080, P3D);
+        noSmooth();
+    }
+
+    public void setup() {
+        surface.setResizable(true);
+        if (g instanceof PGraphicsOpenGL) {
+            PGraphicsOpenGL ogl = ((PGraphicsOpenGL) g);
+            ogl.textureSampling(3);
+        }
+        frameRate(300);
+
+        Display.init(this);
+        AssetCache.init(this);
+        TimeManager.init(this);
+        setCurrentScenario(new MainScenario());
+    }
+
+    public void draw() {
+        background(176, 252, 255);
+        ortho();
+        input.update(this);
+        currentScenario.update(TimeManager.deltaTime);
+        currentScenario.draw(TimeManager.deltaTime, g);
+        if (debugText) {
+            g.push();
+            g.fill(0);
+            var s = 20;
+            g.textSize(s);
+            g.text(currentScenario.world.entities.size() + " Entities (" + currentScenario.world.renderedEnts + " Rendered)", 0, 1*s);
+            g.text(Math.ceil(1000 / TimeManager.frameTime) + " FPS", 0, 2*s);
+            g.text("Cam Pos: " + currentScenario.world.camera.position, 0, 3*s);
+            g.text("Optimal Zoom: " + Display.getOptimalScale(640, 480), 0, 4*s);
+            g.text("Key: " + keyCode, 0, 5*s);
+            g.text("Window Size: [" + width + ", " + height + "]", 0, 6*s);
+            g.pop();
+        }
+        TimeManager.sync();
+    }
+
+    public void setCurrentScenario(Scenario scenario) {
+        if (currentScenario != null) {
+            currentScenario.unlinkInput();
+        }
+        currentScenario = scenario;
+        currentScenario.linkInput(input);
+    }
+
+    public void keyPressed(KeyEvent event) {
+        super.keyPressed(event);
+        input.PressKey(event.getKeyCode());
+    }
+
+    public void keyReleased(KeyEvent event) {
+        super.keyReleased(event);
+        input.ReleaseKey(event.getKeyCode());
+    }
+
+}
