@@ -26,7 +26,7 @@ public class ShroomRun extends PApplet {
     public Camera testCam;
 
     public void settings() {
-        size(1920, 1080, P3D);
+        size(480, 360, P3D);
         noSmooth();
     }
 
