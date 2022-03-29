@@ -10,10 +10,17 @@ public class Display {
     static PApplet owner;
 
     public static double getOptimalScale(int targetWidth, int targetHeight) {
-        double targetAxis = Math.min(targetWidth, targetHeight);
-        double currentAxis = Math.min(owner.width, owner.height);
-
-        return currentAxis / targetAxis;
+        double tW = targetWidth;
+        double tH = targetHeight;
+        double oW = owner.width;
+        double oH = owner.height;
+        double ratio1 = tW/tH;
+        double ratio2 = oW/oH;
+        if (ratio1 > ratio2) {
+            return oW/tW;
+        } else {
+            return oH/tH;
+        }
     }
 
     public static void init(PApplet ownerApplet) {

@@ -7,6 +7,7 @@ import com.sulfrix.shroomrun.lib.Display;
 import com.sulfrix.shroomrun.lib.Input;
 import com.sulfrix.shroomrun.lib.TimeManager;
 import com.sulfrix.shroomrun.scenarios.MainScenario;
+import com.sulfrix.shroomrun.scenarios.MenuScenario;
 import com.sulfrix.shroomrun.scenarios.TestScenario;
 import processing.core.*;
 import processing.event.KeyEvent;
@@ -41,7 +42,7 @@ public class ShroomRun extends PApplet {
         Display.init(this);
         AssetCache.init(this);
         TimeManager.init(this);
-        setCurrentScenario(new MainScenario());
+        setCurrentScenario(new MenuScenario());
     }
 
     public void draw() {

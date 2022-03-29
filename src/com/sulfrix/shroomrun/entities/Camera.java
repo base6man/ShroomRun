@@ -14,7 +14,7 @@ public class Camera extends Entity {
     public boolean useOptimalScale = true;
 
     public Camera(PVector pos) {
-        super(pos, new BoundingBox(0, 0));
+        super(pos, BoundingBox.zero());
     }
 
     public Camera() {

@@ -1,6 +1,7 @@
 package com.sulfrix.shroomrun.scenarios;
 
 import com.sulfrix.shroomrun.Scenario;
+import com.sulfrix.shroomrun.entities.Camera;
 import com.sulfrix.shroomrun.entities.ui.TextEntity;
 import processing.core.PGraphics;
 import processing.core.PVector;
@@ -11,6 +12,9 @@ public class MenuScenario extends Scenario {
 
     @Override
     public void init() {
+        Camera camera = new Camera();
+        world.AddEntity(camera);
+        world.camera = camera;
         world.AddEntity(new TextEntity(new PVector(), "Your balls can't help you now.", 10f, 0, 0));
     }
 

@@ -47,12 +47,13 @@ public class World {
         }
     }
 
-    public void AddEntity(Entity ent) {
+    public Entity AddEntity(Entity ent) {
         if (ent.world != null) {
             ent.world.RemoveEntity(ent);
         }
         ent.world = this;
         entities.add(ent);
+        return ent;
     }
 
     public void RemoveEntity(Entity ent) {

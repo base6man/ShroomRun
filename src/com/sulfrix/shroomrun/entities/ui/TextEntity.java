@@ -1,6 +1,7 @@
 package com.sulfrix.shroomrun.entities.ui;
 
 import com.sulfrix.shroomrun.Entity;
+import com.sulfrix.shroomrun.lib.BoundingBox;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
@@ -13,7 +14,11 @@ public class TextEntity extends Entity {
     int yAlign;
 
     public TextEntity(PVector pos, String text, float size, int alignx, int aligny) {
+        super(pos, BoundingBox.zero());
+        SetText(text, size, alignx, aligny);
 
+        renderingEnabled = true;
+        OBBCenter = false;
     }
 
     @Override
@@ -23,10 +28,15 @@ public class TextEntity extends Entity {
 
     @Override
     public void draw(double timescale, PGraphics g) {
-
+        g.textSize(size);
+        g.textAlign(xAlign, yAlign);
+        g.text(text, 0, 0);
     }
 
     public void SetText(String text, float size, int alignx, int aligny) {
-
+        xAlign = alignx;
+        yAlign = aligny;
+        this.text = text;
+        this.size = size;
     }
 }

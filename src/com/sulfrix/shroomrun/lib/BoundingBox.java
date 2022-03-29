@@ -34,6 +34,10 @@ public class BoundingBox {
         return out;
     }
 
+    public static BoundingBox zero() {
+        return new BoundingBox(0, 0);
+    }
+
     public static boolean pointTouch(BoundingBox bb, PVector pos, PVector point) {
         PVector mins = bb.getMins(pos);
         PVector maxs = bb.getMaxs(pos);
