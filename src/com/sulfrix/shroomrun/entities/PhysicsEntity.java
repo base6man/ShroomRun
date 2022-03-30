@@ -57,6 +57,8 @@ public abstract class PhysicsEntity extends Entity {
                                 collisionSides[0] = true;
                                 position.y = e.position.y + (e.boundingBox.height/2 + boundingBox.height/2);
                             }
+                            e.collide(this);
+
 
 
                         } else {
@@ -85,12 +87,16 @@ public abstract class PhysicsEntity extends Entity {
                                 collisionSides[3] = true;
                                 position.x = e.position.x + (e.boundingBox.width/2 + boundingBox.width/2);
                             }
-
+                            e.collide(this);
                             break;
                         } else {
                             collisionSides[1] = false;
                             collisionSides[3] = false;
                         }
+                    }
+                } else if (e.isTrigger) {
+                    if (BoundingBox.touching(boundingBox, position, e.boundingBox, e.position)) {
+                        e.collide(this);
                     }
                 }
 

@@ -29,7 +29,7 @@ public class TerrainGen extends Entity {
     }
 
     public void generate() {
-        var genWidth = RNG.RandomInt(4, 10, offset);
+        var genWidth = RNG.RandomInt(8, 12, offset);
         offset++;
         var genGap = RNG.RandomInt(0, 2, offset)*2;
         offset++;
@@ -37,17 +37,24 @@ public class TerrainGen extends Entity {
             genY -= RNG.RandomInt(-1, 2, offset);
         }
         offset++;
-        generateBlock(genWidth, 10, genX, genY);
+        var hazards = 1;
+        offset++;
+        generateBlock(genWidth, 10, genX, genY, hazards);
         genX += genWidth + genGap;
         position.x = genX*30;
     }
 
-    public void generateBlock(int width, int height, int baseX, int baseY) {
+    public void generateBlock(int width, int height, int baseX, int baseY, int hazards) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 var newTile = new Tile(new PVector((baseX+x)*30, (baseY+y)*30), "rock.png");
                 world.AddEntity(newTile);
             }
+        }
+        for (int h = 0; h < hazards; h++) {
+            var hazardX = RNG.RandomInt(0, width-1, offset);
+            var hazard = new Hazard(new PVector((baseX + hazardX)*30, (baseY-1)*30), "spikes.png");
+            world.AddEntity(hazard);
         }
     }
 

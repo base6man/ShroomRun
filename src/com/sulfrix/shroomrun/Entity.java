@@ -18,6 +18,7 @@ public abstract class Entity {
 
     public boolean OBBCenter = true;
     public boolean collisionEnabled = false;
+    public boolean isTrigger = false;
     public boolean renderingEnabled = false;
     public boolean updateEnabled = true;
     public boolean renderingOffscreen = false;
@@ -26,6 +27,11 @@ public abstract class Entity {
     public Entity(PVector pos, BoundingBox bb) {
         position = pos;
         boundingBox = bb;
+    }
+
+    public Entity(PVector pos) {
+        position = pos;
+        boundingBox = BoundingBox.zero();
     }
 
     public Entity() {
@@ -54,10 +60,12 @@ public abstract class Entity {
     }
 
     public boolean touching(PVector thisPos, Entity e2) {
-        if (!collisionEnabled || !e2.collisionEnabled) {
+        if ((!collisionEnabled || !e2.collisionEnabled) && !(isTrigger || e2.isTrigger)) {
             return false;
         } else {
             return BoundingBox.touching(boundingBox, thisPos, e2.boundingBox, e2.position);
         }
     }
+
+    public void collide(Entity source) {}
 }

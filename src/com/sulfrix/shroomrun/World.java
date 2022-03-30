@@ -85,7 +85,12 @@ public class World {
             g.stroke(255);
             g.strokeWeight(1);
             g.fill(0, 0, 0, 40);
+            g.translate(entity.boundingBox.offset.x, entity.boundingBox.offset.y);
             g.rect(0, 0, (float)entity.boundingBox.width, (float)entity.boundingBox.height);
+            g.stroke(255, 0, 0);
+            g.noFill();
+            g.strokeWeight(2);
+            g.point(0, 0);
             g.pop();
         }
         g.pop();

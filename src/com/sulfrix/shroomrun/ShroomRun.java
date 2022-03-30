@@ -8,6 +8,8 @@ import processing.core.*;
 import processing.event.KeyEvent;
 import processing.opengl.PGraphicsOpenGL;
 
+import java.util.ArrayList;
+
 public class ShroomRun extends PApplet {
 
     // this is shit, remember to remove
@@ -15,6 +17,8 @@ public class ShroomRun extends PApplet {
 
     // slightly less shit
     public static boolean debugText = true;
+
+    public static ArrayList<Double> framerateGraph = new ArrayList<>();
 
     public Scenario currentScenario;
     public Input input = new Input();
@@ -32,7 +36,7 @@ public class ShroomRun extends PApplet {
             PGraphicsOpenGL ogl = ((PGraphicsOpenGL) g);
             ogl.textureSampling(3);
         }
-        frameRate(300);
+        frameRate(60);
 
         FontManager.init(this);
         Display.init(this);
@@ -63,7 +67,20 @@ public class ShroomRun extends PApplet {
             g.text("deltaTime: " + TimeManager.deltaTime, 0, 7*s);
             g.pop();
         }
+        for (int i = 0; i < framerateGraph.size(); i++) {
+            var t = framerateGraph.get(i);
+            var scale = 5;
+            g.push();
+            g.noStroke();
+            g.fill(255, (int)(((double)i/framerateGraph.size())*200)+55);
+            g.rect(i, (float)(height-(scale*t)), 1, (float)(scale*t));
+            g.pop();
+        }
         TimeManager.sync();
+        framerateGraph.add(TimeManager.frameTime);
+        while (framerateGraph.size() > width) {
+            framerateGraph.remove(0);
+        }
     }
 
     public void setCurrentScenario(Scenario scenario) {

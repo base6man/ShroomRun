@@ -1,14 +1,18 @@
 package com.sulfrix.shroomrun.entities;
 
+import com.sulfrix.shroomrun.Entity;
+import com.sulfrix.shroomrun.entities.entityTypes.Damageable;
+import com.sulfrix.shroomrun.entities.entityTypes.DamageTeam;
 import com.sulfrix.shroomrun.lib.BoundingBox;
-import com.sulfrix.shroomrun.lib.Input;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
-public class RunnerPlayer extends PhysicsEntity {
+public class RunnerPlayer extends PhysicsEntity implements Damageable {
 
     public float jumpTime;
     public boolean hasJumped = true;
+    public float health = 100f;
+    public DamageTeam team;
 
     public RunnerPlayer(PVector pos) {
         super(pos, new BoundingBox(30, 30));
@@ -55,5 +59,15 @@ public class RunnerPlayer extends PhysicsEntity {
         } else {
             velocity.x -= ((velocity.x - 10) / 15)*timescale;
         }
+    }
+
+    @Override
+    public boolean damage(DamageTeam team, float amount, Entity source) {
+        if (team != this.team) {
+            health -= amount;
+            velocity.x = 0;
+            velocity.y -= 9;
+        }
+        return true;
     }
 }
