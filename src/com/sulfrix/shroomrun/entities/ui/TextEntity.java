@@ -2,7 +2,7 @@ package com.sulfrix.shroomrun.entities.ui;
 
 import com.sulfrix.shroomrun.Entity;
 import com.sulfrix.shroomrun.lib.BoundingBox;
-import com.sulfrix.shroomrun.lib.FontManager;
+import com.sulfrix.shroomrun.lib.GlobalManagers.FontManager;
 import processing.core.PGraphics;
 import processing.core.PVector;
 

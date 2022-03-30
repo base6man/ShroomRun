@@ -1,7 +1,7 @@
 package com.sulfrix.shroomrun.entities;
 
 import com.sulfrix.shroomrun.Entity;
-import com.sulfrix.shroomrun.lib.AssetCache;
+import com.sulfrix.shroomrun.lib.GlobalManagers.AssetCache;
 import com.sulfrix.shroomrun.lib.BoundingBox;
 import processing.core.PGraphics;
 import processing.core.PImage;

@@ -2,7 +2,7 @@ package com.sulfrix.shroomrun;
 
 import com.sulfrix.shroomrun.entities.Camera;
 import com.sulfrix.shroomrun.lib.BoundingBox;
-import com.sulfrix.shroomrun.lib.Display;
+import com.sulfrix.shroomrun.lib.GlobalManagers.Display;
 import com.sulfrix.shroomrun.lib.Input;
 import com.sulfrix.shroomrun.lib.RenderPosType;
 import processing.core.PGraphics;

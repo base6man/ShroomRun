@@ -1,6 +1,4 @@
-package com.sulfrix.shroomrun.lib;
-
-import processing.core.PApplet;
+package com.sulfrix.shroomrun.lib.GlobalManagers;
 
 import java.util.Random;
 

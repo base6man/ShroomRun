@@ -1,12 +1,9 @@
 package com.sulfrix.shroomrun;
 
 import com.sulfrix.shroomrun.entities.Camera;
-import com.sulfrix.shroomrun.entities.Tile;
 import com.sulfrix.shroomrun.lib.*;
-import com.sulfrix.shroomrun.scenarios.FrameTestScenario;
+import com.sulfrix.shroomrun.lib.GlobalManagers.*;
 import com.sulfrix.shroomrun.scenarios.MainScenario;
-import com.sulfrix.shroomrun.scenarios.MenuScenario;
-import com.sulfrix.shroomrun.scenarios.TestScenario;
 import processing.core.*;
 import processing.event.KeyEvent;
 import processing.opengl.PGraphicsOpenGL;
@@ -14,7 +11,7 @@ import processing.opengl.PGraphicsOpenGL;
 public class ShroomRun extends PApplet {
 
     // this is shit, remember to remove
-    public static boolean debugOBB = true;
+    public static boolean debugOBB = false;
 
     // slightly less shit
     public static boolean debugText = true;
@@ -63,6 +60,7 @@ public class ShroomRun extends PApplet {
             g.text("Optimal Zoom: " + Display.getOptimalScale(480, 360), 0, 4*s);
             g.text("Key: " + keyCode, 0, 5*s);
             g.text("Window Size: [" + width + ", " + height + "]", 0, 6*s);
+            g.text("deltaTime: " + TimeManager.deltaTime, 0, 7*s);
             g.pop();
         }
         TimeManager.sync();
@@ -73,6 +71,7 @@ public class ShroomRun extends PApplet {
             currentScenario.unlinkInput();
         }
         currentScenario = scenario;
+        scenario.applet = this;
         currentScenario.linkInput(input);
     }
 

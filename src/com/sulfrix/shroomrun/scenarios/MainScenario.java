@@ -2,6 +2,7 @@ package com.sulfrix.shroomrun.scenarios;
 
 import com.sulfrix.shroomrun.Entity;
 import com.sulfrix.shroomrun.Scenario;
+import com.sulfrix.shroomrun.ShroomRun;
 import com.sulfrix.shroomrun.entities.Camera;
 import com.sulfrix.shroomrun.entities.PhysicsTest;
 import com.sulfrix.shroomrun.entities.RunnerPlayer;
@@ -33,6 +34,12 @@ public class MainScenario extends Scenario {
     @Override
     public void update(double timescale) {
         super.update(timescale);
+        if (player.position.y > ((terrainGen.genY+20)*30)) {
+            if (applet instanceof ShroomRun) {
+                var shrRun = (ShroomRun)applet;
+                shrRun.setCurrentScenario(new MainScenario());
+            }
+        }
     }
 
     @Override

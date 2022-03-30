@@ -1,7 +1,4 @@
-package com.sulfrix.shroomrun.lib;
-
-import processing.core.PApplet;
-import processing.core.PGraphics;
+package com.sulfrix.shroomrun.lib.GlobalManagers;
 
 public class Display extends GlobalManager {
     public static double getOptimalScale(int targetWidth, int targetHeight) {

@@ -2,7 +2,7 @@ package com.sulfrix.shroomrun.entities;
 
 import com.sulfrix.shroomrun.Entity;
 import com.sulfrix.shroomrun.lib.BoundingBox;
-import com.sulfrix.shroomrun.lib.RNG;
+import com.sulfrix.shroomrun.lib.GlobalManagers.RNG;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
@@ -29,12 +29,12 @@ public class TerrainGen extends Entity {
     }
 
     public void generate() {
-        var genWidth = RNG.RandomInt(8, 15, offset);
+        var genWidth = RNG.RandomInt(4, 10, offset);
         offset++;
         var genGap = RNG.RandomInt(0, 2, offset)*2;
         offset++;
-        if (genGap <= 2) {
-            genY += RNG.RandomInt(-1, 2, offset);
+        if (genGap <= 6) {
+            genY -= RNG.RandomInt(-1, 2, offset);
         }
         offset++;
         generateBlock(genWidth, 10, genX, genY);

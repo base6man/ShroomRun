@@ -2,6 +2,7 @@ package com.sulfrix.shroomrun;
 
 
 import com.sulfrix.shroomrun.lib.Input;
+import processing.core.PApplet;
 import processing.core.PGraphics;
 
 /**
@@ -12,6 +13,7 @@ import processing.core.PGraphics;
 public abstract class Scenario {
     public World world;
     public Input input;
+    public PApplet applet;
 
     public Scenario() {
         world = new World();

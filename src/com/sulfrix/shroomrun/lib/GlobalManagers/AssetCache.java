@@ -1,6 +1,5 @@
-package com.sulfrix.shroomrun.lib;
+package com.sulfrix.shroomrun.lib.GlobalManagers;
 
-import processing.core.PApplet;
 import processing.core.PImage;
 
 import java.util.HashMap;
