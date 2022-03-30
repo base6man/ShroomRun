@@ -9,10 +9,9 @@ public class RNG extends GlobalManager {
 
     public static int RandomInt(int min, int max) {
         var rand = new Random();
-        rand.setSeed((seed+offset)*9999);
+        rand.setSeed((seed+offset)*100);
         offset++;
         var offset = rand.nextInt(min, max+1);
-        System.out.println(min + " - " + max + ": " + offset);
         return offset;
     }
 
