@@ -2,10 +2,8 @@ package com.sulfrix.shroomrun;
 
 import com.sulfrix.shroomrun.entities.Camera;
 import com.sulfrix.shroomrun.entities.Tile;
-import com.sulfrix.shroomrun.lib.AssetCache;
-import com.sulfrix.shroomrun.lib.Display;
-import com.sulfrix.shroomrun.lib.Input;
-import com.sulfrix.shroomrun.lib.TimeManager;
+import com.sulfrix.shroomrun.lib.*;
+import com.sulfrix.shroomrun.scenarios.FrameTestScenario;
 import com.sulfrix.shroomrun.scenarios.MainScenario;
 import com.sulfrix.shroomrun.scenarios.MenuScenario;
 import com.sulfrix.shroomrun.scenarios.TestScenario;
@@ -16,7 +14,7 @@ import processing.opengl.PGraphicsOpenGL;
 public class ShroomRun extends PApplet {
 
     // this is shit, remember to remove
-    public static boolean debugOBB = false;
+    public static boolean debugOBB = true;
 
     // slightly less shit
     public static boolean debugText = true;
@@ -39,10 +37,12 @@ public class ShroomRun extends PApplet {
         }
         frameRate(300);
 
+        FontManager.init(this);
         Display.init(this);
         AssetCache.init(this);
         TimeManager.init(this);
-        setCurrentScenario(new MenuScenario());
+        RNG.init(this);
+        setCurrentScenario(new MainScenario());
     }
 
     public void draw() {
@@ -56,10 +56,11 @@ public class ShroomRun extends PApplet {
             g.fill(0);
             var s = 20;
             g.textSize(s);
+            FontManager.quickUse(g, "Arial", 20);
             g.text(currentScenario.world.entities.size() + " Entities (" + currentScenario.world.renderedEnts + " Rendered)", 0, 1*s);
-            g.text(Math.ceil(1000 / TimeManager.frameTime) + " FPS", 0, 2*s);
+            g.text(Math.ceil(1000 / TimeManager.avgFrameTime) + " FPS", 0, 2*s);
             g.text("Cam Pos: " + currentScenario.world.camera.position, 0, 3*s);
-            g.text("Optimal Zoom: " + Display.getOptimalScale(640, 480), 0, 4*s);
+            g.text("Optimal Zoom: " + Display.getOptimalScale(480, 360), 0, 4*s);
             g.text("Key: " + keyCode, 0, 5*s);
             g.text("Window Size: [" + width + ", " + height + "]", 0, 6*s);
             g.pop();

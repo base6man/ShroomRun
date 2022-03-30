@@ -29,7 +29,7 @@ public class RunnerPlayer extends PhysicsEntity {
         if (velocity.x < 10) {
             velocity.x += 1 * timescale;
         } else {
-            velocity.x -= (velocity.x - 10) / 10;
+            velocity.x -= ((velocity.x - 10) / 10)*timescale;
         }
     }
 }

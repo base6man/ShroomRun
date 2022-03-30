@@ -29,8 +29,8 @@ public class Tile extends Entity {
     @Override
     public void draw(double timescale, PGraphics g) {
         g.image(texImg, 0, 0, 30, 30);
-        if (world.input.mousePressed) {
+        /*if (world.input.mousePressed) {
             g.image(texImg, 0, 0, 30, 200);
-        }
+        }*/
     }
 }

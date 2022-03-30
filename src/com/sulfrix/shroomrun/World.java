@@ -16,6 +16,8 @@ public class World {
     public double gravity = 1.2;
 
     public ArrayList<Entity> entities;
+    private ArrayList<Entity> pendingAdd = new ArrayList<>();
+    private boolean isUpdating;
     public Camera camera;
     public Input input;
 
@@ -29,10 +31,17 @@ public class World {
 
     public void update(double timescale) {
         if (updateEnabled) {
+            isUpdating = true;
             // unmodifiable list used in case an entity is deleted in the middle of an update() loop
             for (Entity e : Collections.unmodifiableList(entities)) {
                 e.update(timescale * globalTimescale);
             }
+            isUpdating = false;
+
+            for (Entity newEnt : pendingAdd) {
+                AddEntity(newEnt);
+            }
+            pendingAdd.clear();
         }
     }
 
@@ -48,6 +57,10 @@ public class World {
     }
 
     public Entity AddEntity(Entity ent) {
+        if (isUpdating) {
+            pendingAdd.add(ent);
+            return ent;
+        }
         if (ent.world != null) {
             ent.world.RemoveEntity(ent);
         }

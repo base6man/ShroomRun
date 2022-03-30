@@ -38,4 +38,10 @@ public class Camera extends Entity {
             return zoom;
         }
     }
+
+    public BoundingBox getBB() {
+        var w = (float)(Display.width()*(1/getScale()))+0;
+        var h = (float)(Display.height()*(1/getScale()))+0;
+        return new BoundingBox(w, h);
+    }
 }

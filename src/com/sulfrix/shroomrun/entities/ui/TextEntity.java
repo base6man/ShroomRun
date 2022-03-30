@@ -2,6 +2,7 @@ package com.sulfrix.shroomrun.entities.ui;
 
 import com.sulfrix.shroomrun.Entity;
 import com.sulfrix.shroomrun.lib.BoundingBox;
+import com.sulfrix.shroomrun.lib.FontManager;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
@@ -28,8 +29,9 @@ public class TextEntity extends Entity {
 
     @Override
     public void draw(double timescale, PGraphics g) {
-        g.textSize(size);
         g.textAlign(xAlign, yAlign);
+        FontManager.quickUse(g, "Arial", size);
+        g.textSize(size);
         g.text(text, 0, 0);
     }
 

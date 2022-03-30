@@ -3,12 +3,7 @@ package com.sulfrix.shroomrun.lib;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
-public class Display {
-
-    private Display() {}
-
-    static PApplet owner;
-
+public class Display extends GlobalManager {
     public static double getOptimalScale(int targetWidth, int targetHeight) {
         double tW = targetWidth;
         double tH = targetHeight;
@@ -21,10 +16,6 @@ public class Display {
         } else {
             return oH/tH;
         }
-    }
-
-    public static void init(PApplet ownerApplet) {
-        owner = ownerApplet;
     }
 
     public static double width() {

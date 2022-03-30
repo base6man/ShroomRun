@@ -15,7 +15,7 @@ public class MenuScenario extends Scenario {
         Camera camera = new Camera();
         world.AddEntity(camera);
         world.camera = camera;
-        world.AddEntity(new TextEntity(new PVector(), "Your balls can't help you now.", 10f, 0, 0));
+        world.AddEntity(new TextEntity(new PVector(), "Your balls can't help you now.", 30f, 0, 0));
     }
 
     @Override

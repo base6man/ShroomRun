@@ -5,17 +5,8 @@ import processing.core.PImage;
 
 import java.util.HashMap;
 
-public class AssetCache {
+public class AssetCache extends GlobalManager {
     static HashMap<String, PImage> images = new HashMap<String, PImage>();
-    static PApplet owner;
-
-    private AssetCache() {
-
-    }
-
-    public static void init(PApplet ownerApplet) {
-        owner = ownerApplet;
-    }
 
     public static PImage getImage(String name) {
         if (images.containsKey(name)) {
