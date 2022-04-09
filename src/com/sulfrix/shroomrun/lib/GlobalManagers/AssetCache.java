@@ -4,7 +4,7 @@ import processing.core.PImage;
 
 import java.util.HashMap;
 
-public class AssetCache extends GlobalManager {
+public abstract class AssetCache extends GlobalManager {
     static HashMap<String, PImage> images = new HashMap<String, PImage>();
 
     public static PImage getImage(String name) {

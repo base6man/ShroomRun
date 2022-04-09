@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 import java.util.ArrayList;
 
-public class TimeManager extends GlobalManager {
+public abstract class TimeManager extends GlobalManager {
 
     public static int lastSync = 0;
     /**
@@ -26,7 +26,6 @@ public class TimeManager extends GlobalManager {
      */
     public static void sync() {
         deltaTime = ((owner.millis() - lastSync)) / 32.0;
-        deltaTime = Math.min(deltaTime, 2);
         frameTime = ((owner.millis() - lastSync));
         frameTimeList.add(frameTime);
         if (frameTimeList.size() > fpsAvgSize) {
@@ -47,6 +46,27 @@ public class TimeManager extends GlobalManager {
         }
         acc /= size;
         return acc;
+    }
+
+    public static class TimestepInfo {
+        public int timesteps;
+        public double deltaTimePerStep;
+
+        public TimestepInfo(int s, double dt) {
+            timesteps = s;
+            deltaTimePerStep = dt;
+        }
+    }
+
+    public static TimestepInfo calcTimesteps() {
+        if (deltaTime < 1) {
+            return new TimestepInfo(1, deltaTime);
+        }
+        var steps = (int)Math.ceil(deltaTime);
+        var dt = deltaTime/steps;
+        steps = Math.min(10, steps);
+        System.out.println("Overstep activated: " + steps + " steps");
+        return new TimestepInfo(steps, dt);
     }
 
 }

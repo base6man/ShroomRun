@@ -18,6 +18,7 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
         super(pos, new BoundingBox(30, 30));
         renderingEnabled = true;
         collisionEnabled = true;
+        ZPos = 1;
     }
 
     @Override
@@ -51,6 +52,7 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
         g.fill(0);
         g.noStroke();
         g.rect(0, 0, 30, 30);
+        g.text(health, 0, -30);
     }
 
     void MoveForward(double timescale) {
@@ -66,8 +68,15 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
         if (team != this.team) {
             health -= amount;
             velocity.x = 0;
-            velocity.y -= 9;
         }
         return true;
+    }
+
+    public void setHealth(float hp) {
+        health = hp;
+    }
+
+    public float getHealth() {
+        return health;
     }
 }

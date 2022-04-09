@@ -4,9 +4,11 @@ import com.sulfrix.shroomrun.entities.Camera;
 import com.sulfrix.shroomrun.lib.*;
 import com.sulfrix.shroomrun.lib.GlobalManagers.*;
 import com.sulfrix.shroomrun.scenarios.MainScenario;
+import com.sulfrix.shroomrun.scenarios.ParallaxTestScenario;
 import processing.core.*;
 import processing.event.KeyEvent;
 import processing.opengl.PGraphicsOpenGL;
+import processing.sound.SoundFile;
 
 import java.util.ArrayList;
 
@@ -36,7 +38,7 @@ public class ShroomRun extends PApplet {
             PGraphicsOpenGL ogl = ((PGraphicsOpenGL) g);
             ogl.textureSampling(3);
         }
-        frameRate(60);
+        frameRate(300);
 
         FontManager.init(this);
         Display.init(this);
@@ -44,13 +46,25 @@ public class ShroomRun extends PApplet {
         TimeManager.init(this);
         RNG.init(this);
         setCurrentScenario(new MainScenario());
+        //var music = new SoundFile(this, "music/music.wav");
+        //music.loop();
+        //debugPanel = new DebugPanel();
     }
 
     public void draw() {
         background(176, 252, 255);
         ortho();
+        float debugScale = 1f;
+        if (debugScale != 1f) {
+            translate(width /2, height /2);
+            scale(debugScale);
+
+        }
         input.update(this);
-        currentScenario.update(TimeManager.deltaTime);
+        var ts = TimeManager.calcTimesteps();
+        for (int step = 0; step < ts.timesteps; step++) {
+            currentScenario.update(ts.deltaTimePerStep);
+        }
         currentScenario.draw(TimeManager.deltaTime, g);
         if (debugText) {
             g.push();
@@ -58,22 +72,22 @@ public class ShroomRun extends PApplet {
             var s = 20;
             g.textSize(s);
             FontManager.quickUse(g, "Arial", 20);
-            g.text(currentScenario.world.entities.size() + " Entities (" + currentScenario.world.renderedEnts + " Rendered)", 0, 1*s);
-            g.text(Math.ceil(1000 / TimeManager.avgFrameTime) + " FPS", 0, 2*s);
-            g.text("Cam Pos: " + currentScenario.world.camera.position, 0, 3*s);
-            g.text("Optimal Zoom: " + Display.getOptimalScale(480, 360), 0, 4*s);
-            g.text("Key: " + keyCode, 0, 5*s);
-            g.text("Window Size: [" + width + ", " + height + "]", 0, 6*s);
-            g.text("deltaTime: " + TimeManager.deltaTime, 0, 7*s);
+            g.text(currentScenario.world.entities.size() + " Entities (" + currentScenario.world.renderedEnts + " Rendered)", 0, 1 * s);
+            g.text(Math.ceil(1000 / TimeManager.avgFrameTime) + " FPS", 0, 2 * s);
+            g.text("Cam Pos: " + currentScenario.world.camera.position, 0, 3 * s);
+            g.text("Optimal Zoom: " + Display.getOptimalScale(480, 360), 0, 4 * s);
+            g.text("Key: " + keyCode, 0, 5 * s);
+            g.text("Window Size: [" + width + ", " + height + "]", 0, 6 * s);
+            g.text("deltaTime: " + TimeManager.deltaTime, 0, 7 * s);
             g.pop();
         }
         for (int i = 0; i < framerateGraph.size(); i++) {
             var t = framerateGraph.get(i);
-            var scale = 5;
+            double scale = 5;
             g.push();
             g.noStroke();
-            g.fill(255, (int)(((double)i/framerateGraph.size())*200)+55);
-            g.rect(i, (float)(height-(scale*t)), 1, (float)(scale*t));
+            g.fill(255, (int) (((double) i / framerateGraph.size()) * 200) + 55);
+            g.rect(i, (float) (height - (scale * t)), 1, (float) (scale * t));
             g.pop();
         }
         TimeManager.sync();

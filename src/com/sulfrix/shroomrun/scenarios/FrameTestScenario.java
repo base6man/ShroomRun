@@ -23,8 +23,8 @@ public class FrameTestScenario extends Scenario {
         for (int o = 0; o < 500; o++) {
             for (int i = 0; i < 1000; i++) {
                 //world.AddEntity(new Tile(new PVector(i * 30, (float) ((Math.ceil((i*5.0)/30.0)+o)*30)), "rock.png"));
-                var ent = new Tile(new PVector(i * 30, (float) ((Math.ceil((i*-5.0)/30.0)+o+3)*30)), "rock.png");
-                ent.ZPos = (o+i)*-30;
+                var ent = new Tile(new PVector(i * 30, (float) ((Math.ceil((i * -5.0) / 30.0) + o + 3) * 30)), "rock.png");
+                ent.ZPos = (o + i) * -30;
                 world.AddEntity(ent);
                 //world.AddEntity(new Tile(new PVector(i * 30, (float) ((Math.ceil((i*-5.0)/30.0)+o-2)*30)), "rock.png"));
                 //world.AddEntity(new Tile(new PVector(i * 30, o*30, -i*1), "rock.png"));
@@ -63,7 +63,7 @@ public class FrameTestScenario extends Scenario {
         //testCam.position.y += input.mouseY-input.pmouseY;
         super.draw(timescale, g);
         g.pop();
-        g.line(g.width/2, 0, g.width/2, g.height);
-        g.line(0, g.height/2, g.width, g.height/2);
+        g.line(g.width / 2, 0, g.width / 2, g.height);
+        g.line(0, g.height / 2, g.width, g.height / 2);
     }
 }

@@ -46,6 +46,12 @@ public class BoundingBox {
                 (point.y > mins.y && point.y < maxs.y));
     }
 
+    public boolean boxIsLeftOf(BoundingBox other, PVector otherPos, PVector thisPos) {
+        var rightBox = getMins(thisPos);
+        var leftBox = other.getMaxs(otherPos);
+        return leftBox.x < rightBox.x;
+    }
+
     public boolean pointTouch(PVector pos, PVector point) {
         return BoundingBox.pointTouch(this, pos, point);
     }
@@ -55,13 +61,13 @@ public class BoundingBox {
     }
 
     public PVector getMins(PVector pos) {
-        float xmax = (pos.x + offset.x) - width  / 2;
+        float xmax = (pos.x + offset.x) - width / 2;
         float ymax = (pos.y + offset.y) - height / 2;
         return new PVector(xmax, ymax);
     }
 
     public PVector getMaxs(PVector pos) {
-        float xmax = (pos.x + offset.x) + width  / 2;
+        float xmax = (pos.x + offset.x) + width / 2;
         float ymax = (pos.y + offset.y) + height / 2;
         return new PVector(xmax, ymax);
     }

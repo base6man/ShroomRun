@@ -22,9 +22,9 @@ public abstract class PhysicsEntity extends Entity {
     }
 
     public void DoPhysics(double ts, int substeps) {
-        double timescale = 1.0/substeps;
+        double timescale = 1.0 / substeps;
         for (int i = 0; i < substeps; i++) {
-            PhysicsStep(timescale*ts);
+            PhysicsStep(timescale * ts);
         }
     }
 
@@ -35,7 +35,7 @@ public abstract class PhysicsEntity extends Entity {
     }
 
     void DoCollision(double timescale) {
-        for (Entity e: world.entities) {
+        for (Entity e : world.entities) {
             if (e != this) {
                 if (e.collisionEnabled) {
                     if (velocity.y != 0) {
@@ -44,21 +44,20 @@ public abstract class PhysicsEntity extends Entity {
                             vertSign = -1;
                         }
 
-                        BoundingBox bb = new BoundingBox(boundingBox.width/1.2f, boundingBox.height);
-                        PVector pos = PVector.add(position, new PVector(0, (float)(velocity.y*timescale)));
+                        BoundingBox bb = new BoundingBox(boundingBox.width / 1.2f, boundingBox.height);
+                        PVector pos = PVector.add(position, new PVector(0, (float) (velocity.y * timescale)));
 
                         // vertical
                         if (BoundingBox.touching(bb, pos, e.boundingBox, e.position)) {
                             velocity.y = 0;
                             if (vertSign == 1) {
                                 collisionSides[2] = true;
-                                position.y = e.position.y - (e.boundingBox.height/2 + boundingBox.height/2);
+                                position.y = e.position.y - (e.boundingBox.height / 2 + boundingBox.height / 2);
                             } else {
                                 collisionSides[0] = true;
-                                position.y = e.position.y + (e.boundingBox.height/2 + boundingBox.height/2);
+                                position.y = e.position.y + (e.boundingBox.height / 2 + boundingBox.height / 2);
                             }
                             e.collide(this);
-
 
 
                         } else {
@@ -74,18 +73,18 @@ public abstract class PhysicsEntity extends Entity {
                             horizSign = -1;
                         }
 
-                        BoundingBox bb = new BoundingBox(boundingBox.width, boundingBox.height/1.2f);
-                        PVector pos = PVector.add(position, new PVector((float)(velocity.x*timescale), 0));
+                        BoundingBox bb = new BoundingBox(boundingBox.width, boundingBox.height / 1.2f);
+                        PVector pos = PVector.add(position, new PVector((float) (velocity.x * timescale), 0));
 
                         // horizontal
                         if (BoundingBox.touching(bb, pos, e.boundingBox, e.position)) {
                             velocity.x = 0;
                             if (horizSign == 1) {
                                 collisionSides[1] = true;
-                                position.x = e.position.x - (e.boundingBox.width/2 + boundingBox.width/2);
+                                position.x = e.position.x - (e.boundingBox.width / 2 + boundingBox.width / 2);
                             } else {
                                 collisionSides[3] = true;
-                                position.x = e.position.x + (e.boundingBox.width/2 + boundingBox.width/2);
+                                position.x = e.position.x + (e.boundingBox.width / 2 + boundingBox.width / 2);
                             }
                             e.collide(this);
                             break;
@@ -109,6 +108,6 @@ public abstract class PhysicsEntity extends Entity {
     }
 
     void ApplyGravity(double timescale) {
-        velocity.add(new PVector(0, (float)(world.gravity*timescale*gravityMult)));
+        velocity.add(new PVector(0, (float) (world.gravity * timescale * gravityMult)));
     }
 }

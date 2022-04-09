@@ -1,6 +1,6 @@
 package com.sulfrix.shroomrun.lib.GlobalManagers;
 
-public class Display extends GlobalManager {
+public abstract class Display extends GlobalManager {
     public static double getOptimalScale(int targetWidth, int targetHeight) {
         double tW = targetWidth;
         double tH = targetHeight;

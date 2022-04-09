@@ -4,13 +4,18 @@ import com.sulfrix.shroomrun.lib.BoundingBox;
 import com.sulfrix.shroomrun.lib.RenderPosType;
 import processing.core.*;
 
+import java.util.UUID;
+
 public abstract class Entity {
     public PVector position;
-    public double parallax = 0;
+    public double parallax = 1;
     public PVector velocity = new PVector(0, 0);
     public float ZPos = 0;
     public BoundingBox boundingBox;
     public RenderPosType renderPosType = RenderPosType.WORLD_SPACE;
+    public UUID uuid;
+
+    public boolean queueRemove = false;
 
     public World world;
     // focused entities receive player input from World
@@ -24,19 +29,28 @@ public abstract class Entity {
     public boolean renderingOffscreen = false;
     public boolean updateOffscreen = true;
 
+    public boolean removeOffscreen = false; // Despite saying "offscreen," this actuall refers to when an entity leaves the screen on the left side.
+
     public Entity(PVector pos, BoundingBox bb) {
         position = pos;
         boundingBox = bb;
+        genUUID();
     }
 
     public Entity(PVector pos) {
         position = pos;
         boundingBox = BoundingBox.zero();
+        genUUID();
     }
 
     public Entity() {
         position = new PVector(0, 0);
         boundingBox = new BoundingBox(0, 0);
+        genUUID();
+    }
+
+    void genUUID() {
+        uuid = UUID.randomUUID();
     }
 
     public static boolean touching(Entity e1, Entity e2) {
@@ -68,4 +82,8 @@ public abstract class Entity {
     }
 
     public void collide(Entity source) {}
+
+    public void remove() {
+        world.RemoveEntity(this);
+    }
 }

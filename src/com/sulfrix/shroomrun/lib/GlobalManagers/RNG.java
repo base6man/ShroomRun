@@ -1,11 +1,18 @@
 package com.sulfrix.shroomrun.lib.GlobalManagers;
 
+import processing.core.PApplet;
+
 import java.util.Random;
 
-public class RNG extends GlobalManager {
+public abstract class RNG extends GlobalManager {
 
     public static int seed;
     public static int offset;
+
+    public static void init(PApplet ownerApplet) {
+        owner = ownerApplet;
+        Scramble();
+    }
 
     public static int RandomInt(int min, int max) {
         var rand = new Random();
@@ -23,8 +30,24 @@ public class RNG extends GlobalManager {
         return output;
     }
 
+    public static float noise(float x, float y, float z)  {
+        return owner.noise(x, y, z);
+    }
+
+    public static float noise(float x, float y) {
+        return noise(x, y, 0);
+    }
+
+    public static float noise(float x) {
+        return noise(x, 0, 0);
+    }
+
     public static void SetSeed(int seedSet) {
         seed = seedSet;
         offset = 0;
+    }
+
+    public static void Scramble() {
+        SetSeed(new Random().nextInt());
     }
 }

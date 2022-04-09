@@ -24,6 +24,7 @@ public class Hazard extends Entity {
         updateEnabled = false;
         OBBCenter = false;
         isTrigger = true;
+        removeOffscreen = true;
         texture = tex;
         texImg = AssetCache.getImage(texture);
         var bb = new BoundingBox(30, 6);

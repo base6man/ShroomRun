@@ -5,7 +5,7 @@ import processing.core.PGraphics;
 
 import java.util.HashMap;
 
-public class FontManager extends GlobalManager {
+public abstract class FontManager extends GlobalManager {
 
     private static HashMap<String, PFont> fontCache = new HashMap<>(); // "contains size prefix, like "Arial_32"
     public static String defaultFont;
