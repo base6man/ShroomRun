@@ -3,6 +3,7 @@ package com.sulfrix.shroomrun.entities;
 import com.sulfrix.shroomrun.Entity;
 import com.sulfrix.shroomrun.entities.entityTypes.Damageable;
 import com.sulfrix.shroomrun.entities.entityTypes.DamageTeam;
+import com.sulfrix.shroomrun.lib.AnimatedSprite;
 import com.sulfrix.shroomrun.lib.BoundingBox;
 import processing.core.PGraphics;
 import processing.core.PVector;
@@ -14,16 +15,43 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
     public float health = 100f;
     public DamageTeam team;
 
+    public AnimatedSprite sprite;
+    public double animTimer;
+
     public RunnerPlayer(PVector pos) {
         super(pos, new BoundingBox(30, 30));
         renderingEnabled = true;
         collisionEnabled = true;
         ZPos = 1;
+        sprite = new AnimatedSprite(30, 30, "shroom.png");
     }
 
     @Override
     public void update(double timescale) {
         MoveForward(timescale);
+        JumpLogic(timescale);
+        UpdateSprite(timescale);
+        super.update(timescale);
+    }
+
+    public void UpdateSprite(double timescale) {
+        animTimer += (velocity.x * 0.035) * timescale;
+        if (collisionSides[2]) {
+            if (animTimer > 4) {
+                animTimer = 0;
+            }
+            if (animTimer <= 3) {
+                sprite.currentFrame = (int)animTimer;
+            } else {
+                sprite.currentFrame = 1;
+            }
+        } else {
+            animTimer = 1.5;
+            sprite.currentFrame = 0;
+        }
+    }
+
+    public void JumpLogic(double timescale) {
         var willJump = world.input.KeyPressed(32);
         if (collisionSides[2]) {
             jumpTime = 8;
@@ -44,15 +72,11 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
                 gravityMult = 1;
             }
         }
-        super.update(timescale);
     }
 
     @Override
     public void draw(double timescale, PGraphics g) {
-        g.fill(0);
-        g.noStroke();
-        g.rect(0, 0, 30, 30);
-        g.text(health, 0, -30);
+        sprite.draw(g, 0, 0);
     }
 
     void MoveForward(double timescale) {

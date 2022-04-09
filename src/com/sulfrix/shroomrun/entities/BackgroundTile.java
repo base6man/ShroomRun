@@ -24,11 +24,11 @@ public class BackgroundTile extends Entity {
         this.depth = depth;
         ZPos = -depth;
         parallax = depth;
-        points = new float[(tileWidth/6)];
+        points = new float[(tileWidth/5)];
         for (int i = 0; i < points.length; i++) {
             double prog = (double)i/(double)(points.length-1);
             float xPos = (float) (worldPos.x + (prog-0.5)*tileWidth);
-            points[i] = RNG.noise((xPos*(depth/1500))+depth*500)*(1500/depth);
+            points[i] = RNG.noise((xPos*(depth/1500))+depth*500+(float)(Background.seed*10))*(1500/depth);
         }
     }
 

@@ -29,7 +29,7 @@ public class TerrainGen extends Entity {
     }
 
     public void generate() {
-        var h = 25;
+        var h = 20;
         if (offset == 0) {
             generateBlock(24, h, 0, genY, 0);
             genX += 24;

@@ -13,11 +13,14 @@ public class Background extends Entity {
     public float genPos = 0;
     public float depth = 8;
 
+    public static int seed;
+
     public Background(float depth) {
         super(new PVector(0, 0), BoundingBox.zero());
         updateOffscreen = true;
         updateEnabled = true;
         this.depth = depth;
+        seed = RNG.RandomInt(-100, 100);
     }
 
     public Background() {
@@ -34,7 +37,7 @@ public class Background extends Entity {
 
     public void genTile() {
         System.out.println("Background tile generated: " + genPos);
-        world.AddEntity(new BackgroundTile(new PVector(genPos*depth, (depth-2)*-100), depth, new PVector(genPos, 0)));
+        world.AddEntitySort(new BackgroundTile(new PVector(genPos*depth, (depth-2)*-100), depth, new PVector(genPos, 0)));
         genPos+=BackgroundTile.tileWidth;
     }
 

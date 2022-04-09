@@ -18,7 +18,7 @@ public class ShroomRun extends PApplet {
     public static boolean debugOBB = false;
 
     // slightly less shit
-    public static boolean debugText = true;
+    public static boolean debugText = false;
 
     public static ArrayList<Double> framerateGraph = new ArrayList<>();
 
@@ -39,6 +39,8 @@ public class ShroomRun extends PApplet {
             ogl.textureSampling(3);
         }
         frameRate(300);
+        //hint(ENABLE_DEPTH_SORT);
+        //hint(DISABLE_DEPTH_TEST);
 
         FontManager.init(this);
         Display.init(this);
@@ -79,22 +81,32 @@ public class ShroomRun extends PApplet {
             g.text("Key: " + keyCode, 0, 5 * s);
             g.text("Window Size: [" + width + ", " + height + "]", 0, 6 * s);
             g.text("deltaTime: " + TimeManager.deltaTime, 0, 7 * s);
+            for (int i = 0; i < 50; i++) {
+                g.text(currentScenario.world.entities.get(i).getClass().getSimpleName(), 0, (8+i) * s);
+            }
             g.pop();
         }
-        for (int i = 0; i < framerateGraph.size(); i++) {
-            var t = framerateGraph.get(i);
-            double scale = 5;
-            g.push();
-            g.noStroke();
-            g.fill(255, (int) (((double) i / framerateGraph.size()) * 200) + 55);
-            g.rect(i, (float) (height - (scale * t)), 1, (float) (scale * t));
-            g.pop();
+        var frmGrph = false;
+        if (frmGrph) {
+            for (int i = 0; i < framerateGraph.size(); i++) {
+                var t = framerateGraph.get(i);
+                double scale = 5;
+                g.push();
+                g.noStroke();
+                g.fill(255, (int) (((double) i / framerateGraph.size()) * 200) + 55);
+                g.rect(i, (float) (height - (scale * t)), 1, (float) (scale * t));
+                g.pop();
+            }
         }
+
         TimeManager.sync();
-        framerateGraph.add(TimeManager.frameTime);
-        while (framerateGraph.size() > width) {
-            framerateGraph.remove(0);
+        if (frmGrph) {
+            framerateGraph.add(TimeManager.frameTime);
+            while (framerateGraph.size() > width) {
+                framerateGraph.remove(0);
+            }
         }
+
     }
 
     public void setCurrentScenario(Scenario scenario) {

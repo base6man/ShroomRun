@@ -17,6 +17,7 @@ public class World {
 
     public ArrayList<Entity> entities;
     private ArrayList<Entity> pendingAdd = new ArrayList<>();
+    private boolean queueSort;
     private boolean isUpdating;
     public Camera camera;
     public Input input;
@@ -56,6 +57,10 @@ public class World {
                 }
             }
 
+            if (queueSort) {
+                entities.sort((o1, o2) -> (int) (o1.ZPos - o2.ZPos));
+            }
+
             DoCameraFocus(timescale);
         }
     }
@@ -70,7 +75,8 @@ public class World {
         }
     }
 
-    public Entity AddEntity(Entity ent) {
+    public Entity AddEntity(Entity ent, Entity related) {
+        ent.related = related;
         if (isUpdating) {
             pendingAdd.add(ent);
             return ent;
@@ -79,8 +85,22 @@ public class World {
             ent.world.RemoveEntity(ent);
         }
         ent.world = this;
-        entities.add(ent);
+        if (ent.related != null) {
+            entities.add(entities.indexOf(ent.related)-1, ent);
+        } else {
+            entities.add(ent);
+        }
+
         return ent;
+    }
+
+    public void AddEntitySort(Entity ent) {
+        AddEntity(ent);
+        queueSort = true;
+    }
+
+    public Entity AddEntity(Entity ent) {
+        return AddEntity(ent, null);
     }
 
     public void RemoveEntity(Entity ent) {

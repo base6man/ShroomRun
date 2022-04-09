@@ -17,6 +17,9 @@ public abstract class Entity {
 
     public boolean queueRemove = false;
 
+    // only used when creating entity
+    public Entity related;
+
     public World world;
     // focused entities receive player input from World
     public boolean isFocused;
