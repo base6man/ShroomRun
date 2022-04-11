@@ -1,5 +1,7 @@
 package com.sulfrix.shroomrun.lib.GlobalManagers;
 
+import processing.core.PApplet;
+
 public abstract class Display extends GlobalManager {
     public static double getOptimalScale(int targetWidth, int targetHeight) {
         double tW = targetWidth;
@@ -21,5 +23,9 @@ public abstract class Display extends GlobalManager {
 
     public static double height() {
         return owner.height;
+    }
+
+    public static PApplet getApplet() {
+        return owner;
     }
 }

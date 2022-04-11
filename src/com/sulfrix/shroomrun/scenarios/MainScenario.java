@@ -5,6 +5,7 @@ import com.sulfrix.shroomrun.Scenario;
 import com.sulfrix.shroomrun.ShroomRun;
 import com.sulfrix.shroomrun.entities.*;
 import com.sulfrix.shroomrun.entities.entityTypes.Damageable;
+import com.sulfrix.shroomrun.entities.ui.HUDEntity;
 import com.sulfrix.shroomrun.lib.GlobalManagers.RNG;
 import processing.core.PGraphics;
 import processing.core.PVector;
@@ -37,6 +38,8 @@ public class MainScenario extends Scenario {
         world.AddEntity(terrainGen);
         terrainGen.trackedEntity = player;
         terrainGen.generate();
+        var hud = new HUDEntity();
+        world.AddEntity(hud);
     }
 
     @Override

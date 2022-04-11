@@ -38,11 +38,13 @@ public class TerrainGen extends Entity {
         offset++;
         var genGap = RNG.RandomInt(0, 2, offset)*2;
         offset++;
-        if (genGap <= 6) {
-            genY -= RNG.RandomInt(-1, 2, offset);
+        var heightChange = RNG.RandomInt(-2, 1, offset);
+        if (genGap > 3 && genY < 0) {
+            heightChange = 0;
         }
+        genY += heightChange;
         offset++;
-        var hazards = RNG.RandomInt(0, 2, offset);
+        var hazards = RNG.RandomInt(0, 1, offset);
         if (genWidth <= 4) {
             hazards = 0;
         }
@@ -68,7 +70,8 @@ public class TerrainGen extends Entity {
             }
         }
         for (int h = 0; h < hazards; h++) {
-            var hazardX = RNG.RandomInt(1, width-1, offset);
+            var hazardX = RNG.RandomInt(2, width-2, offset);
+            offset++;
             var hazard = new Hazard(new PVector((baseX + hazardX)*30, (baseY-1)*30), "spikes.png");
             world.AddEntity(hazard);
         }

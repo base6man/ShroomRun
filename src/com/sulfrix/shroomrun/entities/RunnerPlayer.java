@@ -5,6 +5,7 @@ import com.sulfrix.shroomrun.entities.entityTypes.Damageable;
 import com.sulfrix.shroomrun.entities.entityTypes.DamageTeam;
 import com.sulfrix.shroomrun.lib.AnimatedSprite;
 import com.sulfrix.shroomrun.lib.BoundingBox;
+import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
@@ -29,9 +30,9 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
     @Override
     public void update(double timescale) {
         MoveForward(timescale);
+        super.update(timescale);
         JumpLogic(timescale);
         UpdateSprite(timescale);
-        super.update(timescale);
     }
 
     public void UpdateSprite(double timescale) {
@@ -54,7 +55,7 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
     public void JumpLogic(double timescale) {
         var willJump = world.input.KeyPressed(32);
         if (collisionSides[2]) {
-            jumpTime = 8;
+            jumpTime = 10;
             hasJumped = false;
         } else {
             if (!willJump) {
@@ -76,6 +77,7 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
 
     @Override
     public void draw(double timescale, PGraphics g) {
+
         sprite.draw(g, 0, 0);
     }
 
