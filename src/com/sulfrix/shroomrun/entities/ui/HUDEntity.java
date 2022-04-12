@@ -24,12 +24,10 @@ public class HUDEntity extends Entity {
         super(new PVector(0, 0), BoundingBox.zero());
         app = Display.getApplet();
         hg = app.createGraphics(480, 360, PConstants.P2D);
+        hg.smooth();
         renderingEnabled = true;
         renderPosType = RenderPosType.SCREEN_SPACE;
         OBBCenter = false;
-        hg.beginDraw();
-        hg.background(255);
-        hg.endDraw();
     }
 
     @Override
@@ -66,7 +64,7 @@ public class HUDEntity extends Entity {
         g.noStroke();
         g.fill(0);
         g.textAlign(PConstants.LEFT, PConstants.TOP);
-        g.text("HEALTH", 0, 0);
+        g.text((String.format("%1.0f", player.position.x)), 0, 0);
         g.push();
         var hpBarThick = 8;
         var hpBarWide = 200;

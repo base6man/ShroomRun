@@ -8,7 +8,7 @@ import com.sulfrix.shroomrun.scenarios.ParallaxTestScenario;
 import processing.core.*;
 import processing.event.KeyEvent;
 import processing.opengl.PGraphicsOpenGL;
-import processing.sound.SoundFile;
+//import processing.sound.SoundFile;
 
 import java.util.ArrayList;
 
@@ -84,6 +84,14 @@ public class ShroomRun extends PApplet {
             for (int i = 0; i < 50; i++) {
                 g.text(currentScenario.world.entities.get(i).getClass().getSimpleName(), 0, (8+i) * s);
             }
+            g.pop();
+        } else {
+            g.push();
+            g.fill(0);
+            g.noStroke();
+            FontManager.quickUse(g, "Arial", 10);
+            g.textAlign(PConstants.RIGHT, PConstants.TOP);
+            g.text(Math.ceil(1000 / TimeManager.avgFrameTime) + " FPS", g.width, 0);
             g.pop();
         }
         var frmGrph = false;

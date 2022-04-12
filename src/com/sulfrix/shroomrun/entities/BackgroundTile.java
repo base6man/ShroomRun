@@ -24,7 +24,7 @@ public class BackgroundTile extends Entity {
         this.depth = depth;
         ZPos = -depth;
         parallax = depth;
-        points = new float[(tileWidth/5)];
+        points = new float[(tileWidth/6)];
         for (int i = 0; i < points.length; i++) {
             double prog = (double)i/(double)(points.length-1);
             float xPos = (float) (worldPos.x + (prog-0.5)*tileWidth);
