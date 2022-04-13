@@ -36,7 +36,6 @@ public class Background extends Entity {
     }
 
     public void genTile() {
-        System.out.println("Background tile generated: " + genPos);
         world.AddEntitySort(new BackgroundTile(new PVector(genPos*depth, (depth-2)*-100), depth, new PVector(genPos, 0)));
         genPos+=BackgroundTile.tileWidth;
     }

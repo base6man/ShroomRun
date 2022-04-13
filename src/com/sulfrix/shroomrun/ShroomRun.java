@@ -7,6 +7,7 @@ import com.sulfrix.shroomrun.scenarios.MainScenario;
 import processing.core.*;
 import processing.event.KeyEvent;
 import processing.opengl.PGraphicsOpenGL;
+import processing.opengl.PSurfaceJOGL;
 //import processing.sound.SoundFile;
 
 import java.util.ArrayList;
@@ -30,7 +31,9 @@ public class ShroomRun extends PApplet {
 
     public void settings() {
         size(480, 360, P3D);
+        //fullScreen(P3D);
         noSmooth();
+        System.out.println("settings");
     }
 
     public void setup() {
@@ -52,6 +55,7 @@ public class ShroomRun extends PApplet {
         //var music = new SoundFile(this, "music/music.wav");
         //music.loop();
         //debugPanel = new DebugPanel();
+
     }
 
     public void draw() {

@@ -39,7 +39,7 @@ public class TerrainGen extends Entity {
         var genGap = RNG.RandomInt(0, 2, offset)*2;
         offset++;
         var heightChange = RNG.RandomInt(-2, 1, offset);
-        if (genGap > 3 && genY < 0) {
+        if (genGap > 3 && heightChange < 0) {
             heightChange = 0;
         }
         genY += heightChange;

@@ -2,6 +2,7 @@ package com.sulfrix.shroomrun.lib;
 
 import com.sulfrix.shroomrun.ShroomRun;
 import processing.core.PApplet;
+import processing.opengl.PSurfaceJOGL;
 
 import java.util.HashMap;
 
