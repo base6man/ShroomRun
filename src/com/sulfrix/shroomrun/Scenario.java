@@ -15,6 +15,8 @@ public abstract class Scenario {
     public Input input;
     public PApplet applet;
 
+    public boolean updatedOnce;
+
     public Scenario() {
         world = new World();
         init();
@@ -24,10 +26,14 @@ public abstract class Scenario {
 
     public void update(double timescale) {
         world.update(timescale);
+        updatedOnce = true;
     }
 
     public void draw(double timescale, PGraphics g) {
-        world.draw(timescale, g);
+        if (updatedOnce) {
+            world.draw(timescale, g);
+        }
+
     }
 
     public void linkInput(Input input) {

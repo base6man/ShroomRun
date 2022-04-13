@@ -3,9 +3,8 @@ package com.sulfrix.shroomrun.entities;
 import com.sulfrix.shroomrun.Entity;
 import com.sulfrix.shroomrun.entities.entityTypes.Damageable;
 import com.sulfrix.shroomrun.entities.entityTypes.DamageTeam;
-import com.sulfrix.shroomrun.lib.AnimatedSprite;
+import com.sulfrix.shroomrun.lib.animation.AnimatedSprite;
 import com.sulfrix.shroomrun.lib.BoundingBox;
-import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
@@ -25,6 +24,8 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
         collisionEnabled = true;
         ZPos = 1;
         sprite = new AnimatedSprite(30, 30, "shroom.png");
+        sprite.addSequence("running", 0.035f, new int[] {0, 1, 2, 1});
+        sprite.addSequence("jump", 1, new int[] {0});
     }
 
     @Override
@@ -36,20 +37,15 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
     }
 
     public void UpdateSprite(double timescale) {
-        animTimer += (velocity.x * 0.035) * timescale;
         if (collisionSides[2]) {
-            if (animTimer > 4) {
-                animTimer = 0;
-            }
-            if (animTimer <= 3) {
-                sprite.currentFrame = (int)animTimer;
-            } else {
-                sprite.currentFrame = 1;
+            if (sprite.currentAnimationName != "running") {
+                sprite.switchAnimation("running");
+                sprite.setTimer(1.5f);
             }
         } else {
-            animTimer = 1.5;
-            sprite.currentFrame = 0;
+            sprite.switchAnimation("jump");
         }
+        sprite.progress(velocity.x*(float)timescale);
     }
 
     public void JumpLogic(double timescale) {
@@ -77,7 +73,6 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
 
     @Override
     public void draw(double timescale, PGraphics g) {
-
         sprite.draw(g, 0, 0);
     }
 
