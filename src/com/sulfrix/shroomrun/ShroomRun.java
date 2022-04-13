@@ -4,7 +4,6 @@ import com.sulfrix.shroomrun.entities.Camera;
 import com.sulfrix.shroomrun.lib.*;
 import com.sulfrix.shroomrun.lib.GlobalManagers.*;
 import com.sulfrix.shroomrun.scenarios.MainScenario;
-import com.sulfrix.shroomrun.scenarios.ParallaxTestScenario;
 import processing.core.*;
 import processing.event.KeyEvent;
 import processing.opengl.PGraphicsOpenGL;
@@ -19,6 +18,8 @@ public class ShroomRun extends PApplet {
 
     // slightly less shit
     public static boolean debugText = false;
+
+    public static boolean frameGraph = false;
 
     public static ArrayList<Double> framerateGraph = new ArrayList<>();
 
@@ -73,7 +74,7 @@ public class ShroomRun extends PApplet {
             g.fill(0);
             var s = 20;
             g.textSize(s);
-            FontManager.quickUse(g, "Arial", 20);
+            FontManager.quickUse(g, "Arial", s);
             g.text(currentScenario.world.entities.size() + " Entities (" + currentScenario.world.renderedEnts + " Rendered)", 0, 1 * s);
             g.text(Math.ceil(1000 / TimeManager.avgFrameTime) + " FPS", 0, 2 * s);
             g.text("Cam Pos: " + currentScenario.world.camera.position, 0, 3 * s);
@@ -94,8 +95,7 @@ public class ShroomRun extends PApplet {
             g.text(Math.ceil(1000 / TimeManager.avgFrameTime) + " FPS", g.width, 0);
             g.pop();
         }
-        var frmGrph = false;
-        if (frmGrph) {
+        if (frameGraph) {
             for (int i = 0; i < framerateGraph.size(); i++) {
                 var t = framerateGraph.get(i);
                 double scale = 5;
@@ -108,7 +108,7 @@ public class ShroomRun extends PApplet {
         }
 
         TimeManager.sync();
-        if (frmGrph) {
+        if (frameGraph) {
             framerateGraph.add(TimeManager.frameTime);
             while (framerateGraph.size() > width) {
                 framerateGraph.remove(0);

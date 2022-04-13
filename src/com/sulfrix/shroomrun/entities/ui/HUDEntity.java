@@ -13,18 +13,10 @@ import processing.core.PVector;
 import processing.opengl.PGraphics2D;
 
 public class HUDEntity extends Entity {
-
-    PGraphics hg;
-
-    PApplet app;
-
     RunnerPlayer player;
 
     public HUDEntity() {
         super(new PVector(0, 0), BoundingBox.zero());
-        app = Display.getApplet();
-        hg = app.createGraphics(480, 360, PConstants.P2D);
-        hg.smooth();
         renderingEnabled = true;
         renderPosType = RenderPosType.SCREEN_SPACE;
         OBBCenter = false;
@@ -38,12 +30,8 @@ public class HUDEntity extends Entity {
     @Override
     public void draw(double timescale, PGraphics g) {
         float scale = (float)Display.getOptimalScale(480, 460);
-        hg.setSize((int)(240*scale), (int)(160*scale));
-        hg.beginDraw();
-        hg.background(0, 0);
-        DrawHealthBar(hg);
-        hg.endDraw();
-        g.image(hg, 0, 0, hg.width, hg.height);
+
+        DrawHealthBar(g);
         /*g.push();
         g.texture(hg);
         g.rect(0, 0, g.width/2, g.height/2);
@@ -68,13 +56,11 @@ public class HUDEntity extends Entity {
         g.push();
         var hpBarThick = 8;
         var hpBarWide = 200;
-        g.translate(hpBarThick/2, hpTextSize+10);
-        g.stroke(0, 127);
-        g.strokeWeight(hpBarThick);
-        g.line(0, 0, hpBarWide, 0);
-        g.stroke(30, 255, 60);
-        g.strokeWeight(hpBarThick);
-        g.line(0, 0, hpBarWide*(player.health/100f), 0);
+        g.translate(0, hpTextSize+10);
+        g.fill(0, 127);
+        g.rect(0, 0, hpBarWide, hpBarThick, hpBarThick);
+        g.fill(30, 255, 60);
+        g.rect(0, 0, hpBarWide*(player.health/100f), hpBarThick, hpBarThick);
         g.pop();
         g.pop();
     }

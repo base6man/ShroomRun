@@ -8,10 +8,14 @@ import processing.core.PGraphics;
 import processing.core.PImage;
 import processing.core.PVector;
 
+import java.util.Random;
+
 public class Tile extends Entity {
 
     public String texture;
     PImage texImg;
+
+    public boolean flipped;
 
     public Tile(PVector pos, String tex) {
         super(pos, new BoundingBox(30, 30));
@@ -24,6 +28,7 @@ public class Tile extends Entity {
         texture = tex;
         texImg = AssetCache.getImage(texture);
         startY = position.y;
+        flipped = new Random().nextBoolean();
     }
 
     public float temp;
@@ -40,6 +45,9 @@ public class Tile extends Entity {
 
         g.scale((float)(1/parallax));
         g.imageMode(PConstants.CENTER);
+        if (flipped) {
+            g.scale(-1, 1);
+        }
         g.image(texImg, 0, 0, 30, 30);
         /*if (world.input.mousePressed) {
             g.image(texImg, 0, 0, 30, 200);

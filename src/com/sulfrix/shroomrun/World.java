@@ -57,6 +57,7 @@ public class World {
                 }
             }
 
+            //queueSort = true;
             if (queueSort) {
                 entities.sort((o1, o2) -> (int) (o1.ZPos - o2.ZPos));
             }
