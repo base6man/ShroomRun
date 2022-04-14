@@ -16,7 +16,6 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
     public DamageTeam team;
 
     public AnimatedSprite sprite;
-    public double animTimer;
 
     public RunnerPlayer(PVector pos) {
         super(pos, new BoundingBox(30, 30));
@@ -26,7 +25,7 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
         sprite = new AnimatedSprite(30, 30, "shroom.png");
         sprite.addSequence("running", 0.035f, new int[] {0, 1, 2, 1}, true);
         sprite.addSequence("jump", 0.25f, new int[] {0}, false);
-        sprite.addSequence("fall", 0.35f, new int[] {1, 2}, false);
+        sprite.addSequence("fall", 0.35f, new int[] {0}, false);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
 
     public void UpdateSprite(double timescale) {
         if (collisionSides[2]) {
-            if (sprite.currentAnimationName != "running") {
+            if (!sprite.currentAnimationName.equals("running")) {
                 sprite.switchAnimation("running");
                 sprite.setTimer(1.5f);
             }
