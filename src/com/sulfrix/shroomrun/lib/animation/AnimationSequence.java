@@ -7,16 +7,18 @@ public class AnimationSequence {
     protected AnimatedSprite owner;
     protected PImage[] frames;
     public float rate;
+    public boolean loop;
     protected float timer;
 
-    protected AnimationSequence(String name, float rate, PImage[] frames) {
+    protected AnimationSequence(String name, float rate, PImage[] frames, boolean loop) {
         this.name = name;
         this.frames = frames;
         this.rate = rate;
+        this.loop = loop;
     }
 
-    public static AnimationSequence addToSprite(AnimatedSprite sprite, String name, float rate, PImage[] frames) {
-        var out = new AnimationSequence(name, rate, frames);
+    public static AnimationSequence addToSprite(AnimatedSprite sprite, String name, float rate, PImage[] frames, boolean loop) {
+        var out = new AnimationSequence(name, rate, frames, loop);
         out.owner = sprite;
         return out;
     }
@@ -30,7 +32,12 @@ public class AnimationSequence {
     }
 
     public PImage getCurrent() {
-        return frames[(int)timer%frames.length];
+        if (loop) {
+            return frames[(int)timer%frames.length];
+        } else {
+            return frames[(int)Math.min(timer, frames.length-1)];
+        }
+
     }
 
     public float getTimer() {

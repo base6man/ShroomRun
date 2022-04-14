@@ -24,8 +24,9 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
         collisionEnabled = true;
         ZPos = 1;
         sprite = new AnimatedSprite(30, 30, "shroom.png");
-        sprite.addSequence("running", 0.035f, new int[] {0, 1, 2, 1});
-        sprite.addSequence("jump", 1, new int[] {0});
+        sprite.addSequence("running", 0.035f, new int[] {0, 1, 2, 1}, true);
+        sprite.addSequence("jump", 0.25f, new int[] {0}, false);
+        sprite.addSequence("fall", 0.35f, new int[] {1, 2}, false);
     }
 
     @Override
@@ -42,10 +43,17 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
                 sprite.switchAnimation("running");
                 sprite.setTimer(1.5f);
             }
+            sprite.progress(velocity.x*(float)timescale);
         } else {
-            sprite.switchAnimation("jump");
+            if (velocity.y < 0) {
+                sprite.switchAnimation("jump");
+            } else {
+                sprite.switchAnimation("fall");
+            }
+
+            sprite.progress((float)timescale);
         }
-        sprite.progress(velocity.x*(float)timescale);
+
     }
 
     public void JumpLogic(double timescale) {

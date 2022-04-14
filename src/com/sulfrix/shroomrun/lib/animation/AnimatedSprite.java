@@ -26,10 +26,10 @@ public class AnimatedSprite {
         }
     }
 
-    public AnimationSequence addSequence(String name, float rate, PImage[] frames) {
+    public AnimationSequence addSequence(String name, float rate, PImage[] frames, boolean loop) {
         AnimationSequence seq;
         if (!animations.containsKey(name)) {
-            seq = AnimationSequence.addToSprite(this, name, rate, frames);
+            seq = AnimationSequence.addToSprite(this, name, rate, frames, loop);
             animations.put(name, seq);
         } else {
             seq = getAnim(name);
@@ -37,12 +37,12 @@ public class AnimatedSprite {
         return seq;
     }
 
-    public AnimationSequence addSequence(String name, float rate, int[] frameIDs) {
+    public AnimationSequence addSequence(String name, float rate, int[] frameIDs, boolean loop) {
         PImage[] frames = new PImage[frameIDs.length];
         for (int i = 0; i < frameIDs.length; i++) {
             frames[i] = imageFrames[frameIDs[i]];
         }
-        return addSequence(name, rate, frames);
+        return addSequence(name, rate, frames, loop);
     }
 
     public AnimationSequence getAnim(String name) {
