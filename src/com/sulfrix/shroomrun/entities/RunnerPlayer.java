@@ -13,8 +13,12 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
     public float jumpTime;
     public boolean hasJumped = true;
     public boolean prevJumpInput = false;
+
     public float health = 100f;
     public DamageTeam team;
+
+    public double maxRunSpeed = 10;
+    public double friction = 0.016;
 
     public AnimatedSprite sprite;
 
@@ -75,7 +79,7 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
         else if (velocity.y > 2 || !willJump) {
             gravityMult = 2.2;
         }
-        else if (velocity.y > -2 && velocity.y < 2 && willJump){
+        else if (velocity.y > -2 && velocity.y < 2){
             gravityMult = 0.5;
         }
         else{
@@ -94,11 +98,9 @@ public class RunnerPlayer extends PhysicsEntity implements Damageable {
     }
 
     void MoveForward(double timescale) {
-        if (velocity.x < 10) {
-            velocity.x += 1 * timescale;
-        } else {
-            velocity.x -= ((velocity.x - 10) / 15)*timescale;
-        }
+        // Couldn't find the runtime variable, I just increased it here
+        // maxRunSpeed += timescale * 0.008;
+        velocity.x = (float)((velocity.x + (maxRunSpeed * friction)) / (1 + friction));
     }
 
     @Override
